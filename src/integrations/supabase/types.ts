@@ -195,6 +195,7 @@ export type Database = {
           sets: number | null
           total_workout_time_minutes: number | null
           user_id: string
+          weight_lbs: number | null
           workout_date: string
           workout_type: string
         }
@@ -207,6 +208,7 @@ export type Database = {
           sets?: number | null
           total_workout_time_minutes?: number | null
           user_id: string
+          weight_lbs?: number | null
           workout_date?: string
           workout_type: string
         }
@@ -219,6 +221,7 @@ export type Database = {
           sets?: number | null
           total_workout_time_minutes?: number | null
           user_id?: string
+          weight_lbs?: number | null
           workout_date?: string
           workout_type?: string
         }
