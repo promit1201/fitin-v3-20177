@@ -174,20 +174,20 @@ const Dashboard = () => {
             </div>
 
             <div
-              onClick={() => navigate('/diet-planner')}
+              onClick={() => navigate('/nutrition-tracker')}
               className="glass-card p-8 rounded-2xl cursor-pointer hover:shadow-lavender-glow transition-all duration-300 group"
             >
               <div className="flex items-center gap-4 mb-4">
                 <div className="bg-primary/10 p-4 rounded-xl group-hover:bg-primary/20 transition-colors">
                   <Apple className="w-8 h-8 text-primary" />
                 </div>
-                <h3 className="text-2xl font-bold">Diet Plans</h3>
+                <h3 className="text-2xl font-bold">Nutrition Tracker</h3>
               </div>
               <p className="text-muted-foreground mb-6">
-                Choose from maintenance, bulking, or cutting diet plans to fuel your goals.
+                Track your meals, monitor nutrition, and achieve your health goals.
               </p>
               <Button className="w-full bg-primary text-primary-foreground hover:shadow-lavender-glow">
-                View Plans
+                Track Nutrition
               </Button>
             </div>
           </motion.div>

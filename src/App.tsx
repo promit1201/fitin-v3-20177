@@ -17,6 +17,7 @@ import ProgramsPage from "./pages/ProgramsPage";
 import TrainersPage from "./pages/TrainersPage";
 import TestimonialsPage from "./pages/TestimonialsPage";
 import ContactPage from "./pages/ContactPage";
+import NutritionTracker from "./pages/NutritionTracker";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -41,6 +42,7 @@ const App = () => (
           <Route path="/workout-planner" element={<WorkoutPlanner />} />
           <Route path="/diet-planner" element={<DietPlanner />} />
           <Route path="/maintenance-diet-logs" element={<MaintenanceDietLogs />} />
+          <Route path="/nutrition-tracker" element={<NutritionTracker />} />
           <Route path="/payment" element={<Payment />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
