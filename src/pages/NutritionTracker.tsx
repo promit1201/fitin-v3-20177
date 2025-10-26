@@ -172,7 +172,7 @@ const NutritionTracker = () => {
                   )}
 
                   {/* Macronutrients */}
-                  <Macronutrients />
+                  <Macronutrients selectedMeal={selectedMealType} />
 
                   {/* Rest Day Calendar */}
                   <RestDayCalendar />
