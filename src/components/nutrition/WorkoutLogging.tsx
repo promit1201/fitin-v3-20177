@@ -13,6 +13,7 @@ export const WorkoutLogging = () => {
   const [workoutType, setWorkoutType] = useState('');
   const [sets, setSets] = useState('');
   const [reps, setReps] = useState('');
+  const [weight, setWeight] = useState('');
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -28,6 +29,7 @@ export const WorkoutLogging = () => {
           workout_type: workoutType,
           sets: parseInt(sets),
           reps: parseInt(reps),
+          weight_lbs: weight ? parseFloat(weight) : null,
         });
 
       if (error) throw error;
@@ -41,6 +43,7 @@ export const WorkoutLogging = () => {
       setWorkoutType('');
       setSets('');
       setReps('');
+      setWeight('');
     },
   });
 
@@ -70,7 +73,7 @@ export const WorkoutLogging = () => {
           </Select>
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-3 gap-4">
           <div>
             <Label htmlFor="sets">Sets</Label>
             <Input
@@ -90,6 +93,17 @@ export const WorkoutLogging = () => {
               value={reps}
               onChange={(e) => setReps(e.target.value)}
               placeholder="10"
+              className="glass-card border-border"
+            />
+          </div>
+          <div>
+            <Label htmlFor="weight">Weight (lbs)</Label>
+            <Input
+              id="weight"
+              type="number"
+              value={weight}
+              onChange={(e) => setWeight(e.target.value)}
+              placeholder="135"
               className="glass-card border-border"
             />
           </div>

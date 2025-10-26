@@ -101,9 +101,11 @@ const NutritionTracker = () => {
               <TabsTrigger value="today" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
                 Today
               </TabsTrigger>
-              <TabsTrigger value="planner" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-                Meal Planner
-              </TabsTrigger>
+              {isPaidPlan && (
+                <TabsTrigger value="planner" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+                  Meal Planner
+                </TabsTrigger>
+              )}
               <TabsTrigger value="insights" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
                 Insights
               </TabsTrigger>
@@ -178,10 +180,12 @@ const NutritionTracker = () => {
               </div>
             </TabsContent>
 
-            {/* Meal Planner Tab */}
-            <TabsContent value="planner">
-              <MealPlanner />
-            </TabsContent>
+            {/* Meal Planner Tab - Paid Plan Only */}
+            {isPaidPlan && (
+              <TabsContent value="planner">
+                <MealPlanner />
+              </TabsContent>
+            )}
 
             {/* Insights Tab */}
             <TabsContent value="insights">
