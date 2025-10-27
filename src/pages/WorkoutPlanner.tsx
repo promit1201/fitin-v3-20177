@@ -709,6 +709,20 @@ const WorkoutPlanner = () => {
                       </div>
                     </div>
 
+                    {/* Flat Bench Press */}
+                    <div className="glass-card p-6 rounded-lg">
+                      <h4 className="font-medium mb-4 text-lg">Flat Bench Press - 3x12</h4>
+                      <div className="max-w-md">
+                        <video 
+                          controls 
+                          className="w-full rounded-lg"
+                          src={benchPressVid2}
+                        >
+                          Your browser does not support the video tag.
+                        </video>
+                      </div>
+                    </div>
+
                     {/* Pec Dec Fly */}
                     <div className="glass-card p-6 rounded-lg">
                       <h4 className="font-medium mb-4 text-lg">Pec Dec Fly - 3x12</h4>
