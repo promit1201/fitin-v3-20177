@@ -665,61 +665,209 @@ const WorkoutPlanner = () => {
                 Recommended 5 meals per day for optimal results with your {workoutCategories.find(c => c.id === selectedCategory)?.name.toLowerCase()} program
               </p>
 
-              {/* Exercise Videos for Skinny to Muscular */}
+              {/* Skinny to Muscular Complete Plan */}
               {selectedCategory === 'skinny-to-muscular' && (
-                <div className="mb-8">
-                  <h3 className="text-xl font-semibold mb-4">Exercise Videos</h3>
-                  <div className="space-y-6">
-                    {/* Chest Press */}
-                    <div className="glass-card p-6 rounded-lg">
-                      <h4 className="font-medium mb-4 text-lg">Chest Press</h4>
-                      <div className="grid md:grid-cols-2 gap-4">
-                        <div>
-                          <video 
-                            controls 
-                            className="w-full rounded-lg"
-                            src={benchPressVid1}
-                          >
-                            Your browser does not support the video tag.
-                          </video>
+                <div className="mb-8 space-y-8">
+                  {/* Nutrition Plan Section */}
+                  <div>
+                    <h3 className="text-2xl font-bold mb-6 text-gradient">Skinny to Muscular Nutrition Plan</h3>
+                    <div className="glass-card p-6 rounded-lg mb-6">
+                      <h4 className="text-lg font-semibold mb-4">Daily Nutrition Overview</h4>
+                      <div className="grid md:grid-cols-4 gap-4">
+                        <div className="bg-primary/10 p-4 rounded-lg text-center">
+                          <p className="text-3xl font-bold text-primary">3000+</p>
+                          <p className="text-sm text-muted-foreground">Calories/Day</p>
                         </div>
-                        <div>
+                        <div className="bg-primary/10 p-4 rounded-lg text-center">
+                          <p className="text-3xl font-bold text-primary">200g</p>
+                          <p className="text-sm text-muted-foreground">Protein</p>
+                        </div>
+                        <div className="bg-primary/10 p-4 rounded-lg text-center">
+                          <p className="text-3xl font-bold text-primary">350g</p>
+                          <p className="text-sm text-muted-foreground">Carbs</p>
+                        </div>
+                        <div className="bg-primary/10 p-4 rounded-lg text-center">
+                          <p className="text-3xl font-bold text-primary">80g</p>
+                          <p className="text-sm text-muted-foreground">Fats</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Detailed Meal Plan */}
+                    <div className="space-y-4">
+                      <div className="glass-card p-6 rounded-lg">
+                        <h4 className="font-semibold mb-3 text-lg flex items-center gap-2">
+                          <span className="bg-primary/20 text-primary px-3 py-1 rounded-full text-sm">Meal 1</span>
+                          Breakfast (7:00 AM) - 650 calories
+                        </h4>
+                        <div className="space-y-2 mb-4">
+                          <p className="text-sm">• 4 whole eggs (scrambled/boiled)</p>
+                          <p className="text-sm">• 2 slices whole wheat bread with peanut butter</p>
+                          <p className="text-sm">• 1 banana</p>
+                          <p className="text-sm">• 1 glass milk or protein shake</p>
+                        </div>
+                        <div className="flex gap-4 text-xs bg-background/50 p-3 rounded">
+                          <span className="font-medium">Protein: 45g</span>
+                          <span className="font-medium">Carbs: 70g</span>
+                          <span className="font-medium">Fats: 22g</span>
+                        </div>
+                      </div>
+
+                      <div className="glass-card p-6 rounded-lg">
+                        <h4 className="font-semibold mb-3 text-lg flex items-center gap-2">
+                          <span className="bg-primary/20 text-primary px-3 py-1 rounded-full text-sm">Meal 2</span>
+                          Mid-Morning Snack (10:00 AM) - 450 calories
+                        </h4>
+                        <div className="space-y-2 mb-4">
+                          <p className="text-sm">• Greek yogurt (200g) with honey</p>
+                          <p className="text-sm">• Mixed nuts (almonds, walnuts) - 30g</p>
+                          <p className="text-sm">• 1 apple or orange</p>
+                        </div>
+                        <div className="flex gap-4 text-xs bg-background/50 p-3 rounded">
+                          <span className="font-medium">Protein: 28g</span>
+                          <span className="font-medium">Carbs: 48g</span>
+                          <span className="font-medium">Fats: 16g</span>
+                        </div>
+                      </div>
+
+                      <div className="glass-card p-6 rounded-lg">
+                        <h4 className="font-semibold mb-3 text-lg flex items-center gap-2">
+                          <span className="bg-primary/20 text-primary px-3 py-1 rounded-full text-sm">Meal 3</span>
+                          Lunch (1:00 PM) - 750 calories
+                        </h4>
+                        <div className="space-y-2 mb-4">
+                          <p className="text-sm">• Grilled chicken breast (200g) or fish</p>
+                          <p className="text-sm">• Brown rice (150g cooked) or sweet potato</p>
+                          <p className="text-sm">• Mixed vegetables (broccoli, carrots, beans)</p>
+                          <p className="text-sm">• 1 tbsp olive oil for cooking</p>
+                        </div>
+                        <div className="flex gap-4 text-xs bg-background/50 p-3 rounded">
+                          <span className="font-medium">Protein: 52g</span>
+                          <span className="font-medium">Carbs: 82g</span>
+                          <span className="font-medium">Fats: 15g</span>
+                        </div>
+                      </div>
+
+                      <div className="glass-card p-6 rounded-lg">
+                        <h4 className="font-semibold mb-3 text-lg flex items-center gap-2">
+                          <span className="bg-primary/20 text-primary px-3 py-1 rounded-full text-sm">Meal 4</span>
+                          Pre-Workout (4:00 PM) - 500 calories
+                        </h4>
+                        <div className="space-y-2 mb-4">
+                          <p className="text-sm">• Oats (80g) with milk</p>
+                          <p className="text-sm">• 2 tbsp peanut butter</p>
+                          <p className="text-sm">• 1 banana</p>
+                          <p className="text-sm">• Whey protein shake (optional)</p>
+                        </div>
+                        <div className="flex gap-4 text-xs bg-background/50 p-3 rounded">
+                          <span className="font-medium">Protein: 35g</span>
+                          <span className="font-medium">Carbs: 68g</span>
+                          <span className="font-medium">Fats: 14g</span>
+                        </div>
+                      </div>
+
+                      <div className="glass-card p-6 rounded-lg">
+                        <h4 className="font-semibold mb-3 text-lg flex items-center gap-2">
+                          <span className="bg-primary/20 text-primary px-3 py-1 rounded-full text-sm">Meal 5</span>
+                          Dinner (7:30 PM) - 650 calories
+                        </h4>
+                        <div className="space-y-2 mb-4">
+                          <p className="text-sm">• Lean beef/chicken (180g) or paneer</p>
+                          <p className="text-sm">• Quinoa or whole wheat pasta (120g cooked)</p>
+                          <p className="text-sm">• Large green salad with olive oil dressing</p>
+                          <p className="text-sm">• Steamed vegetables</p>
+                        </div>
+                        <div className="flex gap-4 text-xs bg-background/50 p-3 rounded">
+                          <span className="font-medium">Protein: 48g</span>
+                          <span className="font-medium">Carbs: 62g</span>
+                          <span className="font-medium">Fats: 18g</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Additional Tips */}
+                    <div className="glass-card p-6 rounded-lg mt-6">
+                      <h4 className="font-semibold mb-4 text-lg">💪 Nutrition Tips for Muscle Gain</h4>
+                      <ul className="space-y-2 text-sm text-muted-foreground">
+                        <li className="flex items-start gap-2">
+                          <span className="text-primary mt-0.5">•</span>
+                          <span>Drink at least 3-4 liters of water daily</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-primary mt-0.5">•</span>
+                          <span>Take a post-workout protein shake within 30 minutes of training</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-primary mt-0.5">•</span>
+                          <span>Consider supplements: Whey protein, creatine, multivitamin</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-primary mt-0.5">•</span>
+                          <span>Get 7-8 hours of quality sleep for muscle recovery</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-primary mt-0.5">•</span>
+                          <span>Track your weight weekly and adjust calories if needed</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  {/* Exercise Videos Section */}
+                  <div>
+                    <h3 className="text-2xl font-bold mb-6 text-gradient">Exercise Form Videos</h3>
+                    <div className="space-y-6">
+                      {/* Chest Press */}
+                      <div className="glass-card p-6 rounded-lg">
+                        <h4 className="font-medium mb-4 text-lg">Chest Press</h4>
+                        <div className="grid md:grid-cols-2 gap-4">
+                          <div>
+                            <video 
+                              controls 
+                              className="w-full rounded-lg"
+                              src={benchPressVid1}
+                            >
+                              Your browser does not support the video tag.
+                            </video>
+                          </div>
+                          <div>
+                            <video 
+                              controls 
+                              className="w-full rounded-lg"
+                              src={benchPressVid2}
+                            >
+                              Your browser does not support the video tag.
+                            </video>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Push Up */}
+                      <div className="glass-card p-6 rounded-lg">
+                        <h4 className="font-medium mb-4 text-lg">Push Up Form</h4>
+                        <div className="max-w-md">
                           <video 
                             controls 
                             className="w-full rounded-lg"
-                            src={benchPressVid2}
+                            src={pushUpVid1}
                           >
                             Your browser does not support the video tag.
                           </video>
                         </div>
                       </div>
-                    </div>
 
-                    {/* Push Up */}
-                    <div className="glass-card p-6 rounded-lg">
-                      <h4 className="font-medium mb-4 text-lg">Push Up Form</h4>
-                      <div className="max-w-md">
-                        <video 
-                          controls 
-                          className="w-full rounded-lg"
-                          src={pushUpVid1}
-                        >
-                          Your browser does not support the video tag.
-                        </video>
-                      </div>
-                    </div>
-
-                    {/* Chest Fly */}
-                    <div className="glass-card p-6 rounded-lg">
-                      <h4 className="font-medium mb-4 text-lg">Chest Fly Form</h4>
-                      <div className="max-w-md">
-                        <video 
-                          controls 
-                          className="w-full rounded-lg"
-                          src={pushUpVid2}
-                        >
-                          Your browser does not support the video tag.
-                        </video>
+                      {/* Chest Fly */}
+                      <div className="glass-card p-6 rounded-lg">
+                        <h4 className="font-medium mb-4 text-lg">Chest Fly Form</h4>
+                        <div className="max-w-md">
+                          <video 
+                            controls 
+                            className="w-full rounded-lg"
+                            src={pushUpVid2}
+                          >
+                            Your browser does not support the video tag.
+                          </video>
+                        </div>
                       </div>
                     </div>
                   </div>
