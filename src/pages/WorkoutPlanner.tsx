@@ -4,6 +4,10 @@ import { Button } from '@/components/ui/button';
 import { ArrowLeft, Dumbbell, Heart, Zap, Target, Plus, Home, Calculator, TrendingUp, TrendingDown, Lock, User, ClipboardList, Calendar } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import logo from '@/assets/fitin-final-logo.jpg';
+import benchPressVid1 from '@/assets/benchpressvid1.mp4';
+import benchPressVid2 from '@/assets/benchpressvid2.mp4';
+import pushUpVid1 from '@/assets/pushupvid1.mp4';
+import pushUpVid2 from '@/assets/pushupvid2.mp4';
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
@@ -660,6 +664,67 @@ const WorkoutPlanner = () => {
               <p className="text-muted-foreground mb-6">
                 Recommended 5 meals per day for optimal results with your {workoutCategories.find(c => c.id === selectedCategory)?.name.toLowerCase()} program
               </p>
+
+              {/* Exercise Videos for Skinny to Muscular */}
+              {selectedCategory === 'skinny-to-muscular' && (
+                <div className="mb-8">
+                  <h3 className="text-xl font-semibold mb-4">Exercise Videos</h3>
+                  <div className="space-y-6">
+                    {/* Chest Press */}
+                    <div className="glass-card p-6 rounded-lg">
+                      <h4 className="font-medium mb-4 text-lg">Chest Press</h4>
+                      <div className="grid md:grid-cols-2 gap-4">
+                        <div>
+                          <video 
+                            controls 
+                            className="w-full rounded-lg"
+                            src={benchPressVid1}
+                          >
+                            Your browser does not support the video tag.
+                          </video>
+                        </div>
+                        <div>
+                          <video 
+                            controls 
+                            className="w-full rounded-lg"
+                            src={benchPressVid2}
+                          >
+                            Your browser does not support the video tag.
+                          </video>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Push Up */}
+                    <div className="glass-card p-6 rounded-lg">
+                      <h4 className="font-medium mb-4 text-lg">Push Up Form</h4>
+                      <div className="max-w-md">
+                        <video 
+                          controls 
+                          className="w-full rounded-lg"
+                          src={pushUpVid1}
+                        >
+                          Your browser does not support the video tag.
+                        </video>
+                      </div>
+                    </div>
+
+                    {/* Chest Fly */}
+                    <div className="glass-card p-6 rounded-lg">
+                      <h4 className="font-medium mb-4 text-lg">Chest Fly Form</h4>
+                      <div className="max-w-md">
+                        <video 
+                          controls 
+                          className="w-full rounded-lg"
+                          src={pushUpVid2}
+                        >
+                          Your browser does not support the video tag.
+                        </video>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
               
               <div className="grid md:grid-cols-2 gap-6">
                 {/* Meal Plan */}
