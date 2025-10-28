@@ -629,6 +629,8 @@ const WorkoutPlanner = () => {
                   onClick={() => {
                     if (category.id === 'skinny-to-muscular') {
                       navigate('/skinny-to-muscular-plan');
+                    } else if (category.id === 'fat-to-muscular') {
+                      navigate('/fat-to-muscular-plan');
                     } else {
                       setSelectedCategory(category.id);
                     }

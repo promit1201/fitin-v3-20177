@@ -3,6 +3,7 @@ import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { NutritionInsights } from "@/components/nutrition/NutritionInsights";
+import { MealPlanCard } from "@/components/nutrition/MealPlanCard";
 import pushUpVid1 from "@/assets/pushupvid1.mp4";
 import benchPressVid1 from "@/assets/benchpressvid1.mp4";
 import benchPressVid2 from "@/assets/benchpressvid2.mp4";
@@ -39,6 +40,9 @@ const SkinnyToMuscularPlan = () => {
 
           {/* Progress Tracking Section */}
           <NutritionInsights isPaidPlan={true} />
+
+          {/* Meal Plan Section */}
+          <MealPlanCard isPaidPlan={true} />
 
           {/* Chest Section - Monday */}
           <div className="glass-card p-8 rounded-2xl">
