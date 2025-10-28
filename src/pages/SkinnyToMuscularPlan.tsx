@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { NutritionInsights } from "@/components/nutrition/NutritionInsights";
 import pushUpVid1 from "@/assets/pushupvid1.mp4";
 import benchPressVid1 from "@/assets/benchpressvid1.mp4";
 import benchPressVid2 from "@/assets/benchpressvid2.mp4";
@@ -35,6 +36,9 @@ const SkinnyToMuscularPlan = () => {
               Complete workout program with exercise demonstrations
             </p>
           </div>
+
+          {/* Progress Tracking Section */}
+          <NutritionInsights isPaidPlan={true} />
 
           {/* Chest Section - Monday */}
           <div className="glass-card p-8 rounded-2xl">
@@ -129,6 +133,114 @@ const SkinnyToMuscularPlan = () => {
               {/* Dumbbell Curl */}
               <div className="glass-card p-6 rounded-lg">
                 <h4 className="font-medium mb-4 text-lg">Dumbbell Curl (Biceps) - 3x12</h4>
+                <p className="text-muted-foreground">Video coming soon</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Back Section - Tuesday */}
+          <div className="glass-card p-8 rounded-2xl">
+            <h2 className="text-3xl font-bold mb-6 text-primary">Tuesday: Back</h2>
+            <div className="space-y-6">
+              {/* Wide grip Pull Ups */}
+              <div className="glass-card p-6 rounded-lg">
+                <h4 className="font-medium mb-4 text-lg">Wide grip Pull Ups - 3x12</h4>
+                <p className="text-muted-foreground">Video coming soon</p>
+              </div>
+
+              {/* Lat pull-downs */}
+              <div className="glass-card p-6 rounded-lg">
+                <h4 className="font-medium mb-4 text-lg">Lat pull-downs - 3x12</h4>
+                <p className="text-muted-foreground">Video coming soon</p>
+              </div>
+
+              {/* Close-grip Lat pull-downs */}
+              <div className="glass-card p-6 rounded-lg">
+                <h4 className="font-medium mb-4 text-lg">Close-grip Lat pull-downs - 3x12</h4>
+                <p className="text-muted-foreground">Video coming soon</p>
+              </div>
+
+              {/* T-bar rows */}
+              <div className="glass-card p-6 rounded-lg">
+                <h4 className="font-medium mb-4 text-lg">T-bar rows - 4x12</h4>
+                <p className="text-muted-foreground">Video coming soon</p>
+              </div>
+
+              {/* Dumbbell rows */}
+              <div className="glass-card p-6 rounded-lg">
+                <h4 className="font-medium mb-4 text-lg">Dumbbell rows - 3x12</h4>
+                <p className="text-muted-foreground">Video coming soon</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Shoulder Section - Thursday */}
+          <div className="glass-card p-8 rounded-2xl">
+            <h2 className="text-3xl font-bold mb-6 text-primary">Thursday: Shoulder</h2>
+            <div className="space-y-6">
+              {/* Shoulder press */}
+              <div className="glass-card p-6 rounded-lg">
+                <h4 className="font-medium mb-4 text-lg">Shoulder press - 3x12</h4>
+                <p className="text-muted-foreground">Video coming soon</p>
+              </div>
+
+              {/* Side raises */}
+              <div className="glass-card p-6 rounded-lg">
+                <h4 className="font-medium mb-4 text-lg">Side raises - 3x12</h4>
+                <p className="text-muted-foreground">Video coming soon</p>
+              </div>
+
+              {/* Lateral raises */}
+              <div className="glass-card p-6 rounded-lg">
+                <h4 className="font-medium mb-4 text-lg">Lateral raises - 3x12</h4>
+                <p className="text-muted-foreground">Video coming soon</p>
+              </div>
+
+              {/* Rope pushover */}
+              <div className="glass-card p-6 rounded-lg">
+                <h4 className="font-medium mb-4 text-lg">Rope pushover - 3x12</h4>
+                <p className="text-muted-foreground">Video coming soon</p>
+              </div>
+
+              {/* Shrugs */}
+              <div className="glass-card p-6 rounded-lg">
+                <h4 className="font-medium mb-4 text-lg">Shrugs - 3x12</h4>
+                <p className="text-muted-foreground">Perform in proper range of motion</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Legs Section - Friday */}
+          <div className="glass-card p-8 rounded-2xl">
+            <h2 className="text-3xl font-bold mb-6 text-primary">Friday: Legs</h2>
+            <div className="space-y-6">
+              {/* Barbell squats */}
+              <div className="glass-card p-6 rounded-lg">
+                <h4 className="font-medium mb-4 text-lg">Barbell squats - 4x12</h4>
+                <p className="text-muted-foreground">Video coming soon</p>
+              </div>
+
+              {/* Leg press */}
+              <div className="glass-card p-6 rounded-lg">
+                <h4 className="font-medium mb-4 text-lg">Leg press - 4x12</h4>
+                <p className="text-muted-foreground">Video coming soon</p>
+              </div>
+
+              {/* Leg curl */}
+              <div className="glass-card p-6 rounded-lg">
+                <h4 className="font-medium mb-4 text-lg">Leg curl - 4x12</h4>
+                <p className="text-muted-foreground">Video coming soon</p>
+              </div>
+
+              {/* Leg extensions */}
+              <div className="glass-card p-6 rounded-lg">
+                <h4 className="font-medium mb-4 text-lg">Leg extensions - 4x(till failure)</h4>
+                <p className="text-muted-foreground">Video coming soon</p>
+              </div>
+
+              {/* Calf raises */}
+              <div className="glass-card p-6 rounded-lg">
+                <h4 className="font-medium mb-4 text-lg">Calf raises - 4x10</h4>
                 <p className="text-muted-foreground">Video coming soon</p>
               </div>
             </div>
