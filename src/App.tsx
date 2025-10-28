@@ -19,6 +19,7 @@ import TestimonialsPage from "./pages/TestimonialsPage";
 import ContactPage from "./pages/ContactPage";
 import NutritionTracker from "./pages/NutritionTracker";
 import NotFound from "./pages/NotFound";
+import SkinnyToMuscularPlan from "./pages/SkinnyToMuscularPlan";
 
 const queryClient = new QueryClient();
 
@@ -44,6 +45,7 @@ const App = () => (
           <Route path="/maintenance-diet-logs" element={<MaintenanceDietLogs />} />
           <Route path="/nutrition-tracker" element={<NutritionTracker />} />
           <Route path="/payment" element={<Payment />} />
+          <Route path="/skinny-to-muscular-plan" element={<SkinnyToMuscularPlan />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

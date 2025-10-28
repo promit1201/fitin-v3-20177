@@ -627,7 +627,11 @@ const WorkoutPlanner = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                   onClick={() => {
-                    setSelectedCategory(category.id);
+                    if (category.id === 'skinny-to-muscular') {
+                      navigate('/skinny-to-muscular-plan');
+                    } else {
+                      setSelectedCategory(category.id);
+                    }
                   }}
                   className={`glass-card p-8 rounded-2xl cursor-pointer transition-all duration-300 relative ${
                     selectedCategory === category.id
@@ -665,80 +669,6 @@ const WorkoutPlanner = () => {
                 Recommended 5 meals per day for optimal results with your {workoutCategories.find(c => c.id === selectedCategory)?.name.toLowerCase()} program
               </p>
 
-              {/* Skinny to Muscular Complete Plan */}
-              {selectedCategory === 'skinny-to-muscular' && (
-                <div className="mb-8 space-y-8">
-                  <h3 className="text-2xl font-bold mb-6 text-gradient">Skinny to Muscular Workout Plan</h3>
-                  <div className="space-y-6">
-                    {/* Warmup Pushups */}
-                    <div className="glass-card p-6 rounded-lg">
-                      <h4 className="font-medium mb-4 text-lg">Warmup Pushups - 3x12</h4>
-                      <div className="max-w-md">
-                        <video 
-                          controls 
-                          className="w-full rounded-lg"
-                          src={pushUpVid1}
-                        >
-                          Your browser does not support the video tag.
-                        </video>
-                      </div>
-                    </div>
-
-                    {/* Incline Bench Press */}
-                    <div className="glass-card p-6 rounded-lg">
-                      <h4 className="font-medium mb-4 text-lg">Incline Bench Press - 3x12</h4>
-                      <div className="grid md:grid-cols-2 gap-4">
-                        <div>
-                          <video 
-                            controls 
-                            className="w-full rounded-lg"
-                            src={benchPressVid1}
-                          >
-                            Your browser does not support the video tag.
-                          </video>
-                        </div>
-                        <div>
-                          <video 
-                            controls 
-                            className="w-full rounded-lg"
-                            src={benchPressVid2}
-                          >
-                            Your browser does not support the video tag.
-                          </video>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Flat Bench Press */}
-                    <div className="glass-card p-6 rounded-lg">
-                      <h4 className="font-medium mb-4 text-lg">Flat Bench Press - 3x12</h4>
-                      <div className="max-w-md">
-                        <video 
-                          controls 
-                          className="w-full rounded-lg"
-                          src={benchPressVid2}
-                        >
-                          Your browser does not support the video tag.
-                        </video>
-                      </div>
-                    </div>
-
-                    {/* Pec Dec Fly */}
-                    <div className="glass-card p-6 rounded-lg">
-                      <h4 className="font-medium mb-4 text-lg">Pec Dec Fly - 3x12</h4>
-                      <div className="max-w-md">
-                        <video 
-                          controls 
-                          className="w-full rounded-lg"
-                          src={pushUpVid2}
-                        >
-                          Your browser does not support the video tag.
-                        </video>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
               
               <div className="grid md:grid-cols-2 gap-6">
                 {/* Meal Plan */}
