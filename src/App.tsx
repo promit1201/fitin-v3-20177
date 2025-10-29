@@ -21,7 +21,6 @@ import NutritionTracker from "./pages/NutritionTracker";
 import NotFound from "./pages/NotFound";
 import SkinnyToMuscularPlan from "./pages/SkinnyToMuscularPlan";
 import FatToMuscularPlan from "./pages/FatToMuscularPlan";
-import PremiumOnboarding from "./pages/PremiumOnboarding";
 
 const queryClient = new QueryClient();
 
@@ -49,7 +48,6 @@ const App = () => (
           <Route path="/payment" element={<Payment />} />
           <Route path="/skinny-to-muscular-plan" element={<SkinnyToMuscularPlan />} />
           <Route path="/fat-to-muscular-plan" element={<FatToMuscularPlan />} />
-          <Route path="/premium-onboarding" element={<PremiumOnboarding />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
