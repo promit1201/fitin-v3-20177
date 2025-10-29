@@ -85,7 +85,10 @@ const Payment = () => {
               <p className="text-sm text-muted-foreground">Cancel anytime. No long-term commitments.</p>
             </div>
 
-            <Button className="w-full bg-yellow-500 text-black hover:bg-yellow-400 text-lg py-6">
+            <Button 
+              className="w-full bg-yellow-500 text-black hover:bg-yellow-400 text-lg py-6"
+              onClick={() => navigate('/premium-onboarding')}
+            >
               Proceed to Payment Gateway
             </Button>
 
