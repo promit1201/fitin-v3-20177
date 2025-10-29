@@ -631,6 +631,8 @@ const WorkoutPlanner = () => {
                       navigate('/skinny-to-muscular-plan');
                     } else if (category.id === 'fat-to-muscular') {
                       navigate('/fat-to-muscular-plan');
+                    } else if (category.id === 'home-workout') {
+                      navigate('/home-workout-plan');
                     } else {
                       setSelectedCategory(category.id);
                     }
@@ -658,94 +660,7 @@ const WorkoutPlanner = () => {
           </div>
 
           {/* Selected Workout Nutrition Page */}
-          {selectedCategory && selectedCategory === 'home-workout' && !showWorkoutLogger && (
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="mt-12"
-            >
-              <div className="mb-8">
-                <h2 className="text-3xl font-bold mb-4">Home Workout Routines</h2>
-                <p className="text-muted-foreground">Your weekly workout plan - no equipment needed</p>
-              </div>
-
-              {/* Workout Routines */}
-              <div className="grid md:grid-cols-3 gap-6 mb-8">
-                {[
-                  {
-                    day: 'Monday',
-                    title: 'Upper Body (Push Focus)',
-                    exercises: [
-                      'Push-ups – 4×12–15',
-                      'Pike Push-ups (for shoulders) – 3×10',
-                      'Dips on chair/bed – 3×12',
-                      'Shoulder Taps – 3×20',
-                      'Plank – 3×45 sec',
-                    ],
-                  },
-                  {
-                    day: 'Tuesday',
-                    title: 'Lower Body (Legs & Core)',
-                    exercises: [
-                      'Squats – 4×15',
-                      'Lunges – 3×12 each leg',
-                      'Glute Bridge – 3×15',
-                      'Calf Raises – 3×20',
-                    ],
-                  },
-                  {
-                    day: 'Wednesday',
-                    title: 'Pull & Core Strength',
-                    exercises: [
-                      'Inverted Rows (under sturdy table) – 3×10',
-                      'Superman Hold – 3×30 sec',
-                      'Reverse Snow Angels – 3×12',
-                      'Plank with Shoulder Taps – 3×12',
-                    ],
-                  },
-                ].map((routine) => (
-                  <div key={routine.day} className="glass-card p-6 rounded-2xl">
-                    <div className="flex items-center gap-2 mb-4">
-                      <Dumbbell className="w-5 h-5 text-primary" />
-                      <h3 className="text-xl font-bold">{routine.day}</h3>
-                    </div>
-                    <p className="text-sm text-muted-foreground mb-4">{routine.title}</p>
-                    <ul className="space-y-2">
-                      {routine.exercises.map((exercise, idx) => (
-                        <li key={idx} className="text-sm flex items-start gap-2">
-                          <span className="text-primary mt-1">•</span>
-                          <span>{exercise}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
-
-              {/* Must Follow */}
-              <div className="glass-card p-6 rounded-2xl mb-8">
-                <div className="flex items-center gap-2 mb-4">
-                  <Target className="w-5 h-5 text-primary" />
-                  <h3 className="text-xl font-bold">Must Follow</h3>
-                </div>
-                <ul className="grid md:grid-cols-2 gap-3">
-                  {[
-                    'Warm-up 5 min (jumping jacks, arm circles, spot jog)',
-                    'Stretch after each workout',
-                    'Eat clean: protein + veggies + complex carbs',
-                    'Sleep well, stay hydrated',
-                  ].map((item, idx) => (
-                    <li key={idx} className="flex items-start gap-2">
-                      <Target className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
-                      <span className="text-sm">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </motion.div>
-          )}
-
-          {selectedCategory && selectedCategory !== 'home-workout' && !showWorkoutLogger && (
+          {selectedCategory && !showWorkoutLogger && (
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
