@@ -658,7 +658,94 @@ const WorkoutPlanner = () => {
           </div>
 
           {/* Selected Workout Nutrition Page */}
-          {selectedCategory && !showWorkoutLogger && (
+          {selectedCategory && selectedCategory === 'home-workout' && !showWorkoutLogger && (
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mt-12"
+            >
+              <div className="mb-8">
+                <h2 className="text-3xl font-bold mb-4">Home Workout Routines</h2>
+                <p className="text-muted-foreground">Your weekly workout plan - no equipment needed</p>
+              </div>
+
+              {/* Workout Routines */}
+              <div className="grid md:grid-cols-3 gap-6 mb-8">
+                {[
+                  {
+                    day: 'Monday',
+                    title: 'Upper Body (Push Focus)',
+                    exercises: [
+                      'Push-ups – 4×12–15',
+                      'Pike Push-ups (for shoulders) – 3×10',
+                      'Dips on chair/bed – 3×12',
+                      'Shoulder Taps – 3×20',
+                      'Plank – 3×45 sec',
+                    ],
+                  },
+                  {
+                    day: 'Tuesday',
+                    title: 'Lower Body (Legs & Core)',
+                    exercises: [
+                      'Squats – 4×15',
+                      'Lunges – 3×12 each leg',
+                      'Glute Bridge – 3×15',
+                      'Calf Raises – 3×20',
+                    ],
+                  },
+                  {
+                    day: 'Wednesday',
+                    title: 'Pull & Core Strength',
+                    exercises: [
+                      'Inverted Rows (under sturdy table) – 3×10',
+                      'Superman Hold – 3×30 sec',
+                      'Reverse Snow Angels – 3×12',
+                      'Plank with Shoulder Taps – 3×12',
+                    ],
+                  },
+                ].map((routine) => (
+                  <div key={routine.day} className="glass-card p-6 rounded-2xl">
+                    <div className="flex items-center gap-2 mb-4">
+                      <Dumbbell className="w-5 h-5 text-primary" />
+                      <h3 className="text-xl font-bold">{routine.day}</h3>
+                    </div>
+                    <p className="text-sm text-muted-foreground mb-4">{routine.title}</p>
+                    <ul className="space-y-2">
+                      {routine.exercises.map((exercise, idx) => (
+                        <li key={idx} className="text-sm flex items-start gap-2">
+                          <span className="text-primary mt-1">•</span>
+                          <span>{exercise}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+
+              {/* Must Follow */}
+              <div className="glass-card p-6 rounded-2xl mb-8">
+                <div className="flex items-center gap-2 mb-4">
+                  <Target className="w-5 h-5 text-primary" />
+                  <h3 className="text-xl font-bold">Must Follow</h3>
+                </div>
+                <ul className="grid md:grid-cols-2 gap-3">
+                  {[
+                    'Warm-up 5 min (jumping jacks, arm circles, spot jog)',
+                    'Stretch after each workout',
+                    'Eat clean: protein + veggies + complex carbs',
+                    'Sleep well, stay hydrated',
+                  ].map((item, idx) => (
+                    <li key={idx} className="flex items-start gap-2">
+                      <Target className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
+                      <span className="text-sm">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </motion.div>
+          )}
+
+          {selectedCategory && selectedCategory !== 'home-workout' && !showWorkoutLogger && (
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -671,36 +758,36 @@ const WorkoutPlanner = () => {
                 Recommended 5 meals per day for optimal results with your {workoutCategories.find(c => c.id === selectedCategory)?.name.toLowerCase()} program
               </p>
 
-              
+
               <div className="grid md:grid-cols-2 gap-6">
                 {/* Meal Plan */}
                 <div className="space-y-4">
                   <h3 className="text-xl font-semibold mb-4">Daily Meal Plan</h3>
-                  
+
                   <div className="glass-card p-4 rounded-lg">
                     <h4 className="font-medium mb-2">Meal 1: Breakfast (7:00 AM)</h4>
                     <p className="text-sm text-muted-foreground">Oats with protein powder, banana, and almonds</p>
                     {userPlan === 'paid' && <p className="text-xs text-primary mt-1">~450 calories</p>}
                   </div>
-                  
+
                   <div className="glass-card p-4 rounded-lg">
                     <h4 className="font-medium mb-2">Meal 2: Mid-Morning (10:00 AM)</h4>
                     <p className="text-sm text-muted-foreground">Greek yogurt with berries and honey</p>
                     {userPlan === 'paid' && <p className="text-xs text-primary mt-1">~300 calories</p>}
                   </div>
-                  
+
                   <div className="glass-card p-4 rounded-lg">
                     <h4 className="font-medium mb-2">Meal 3: Lunch (1:00 PM)</h4>
                     <p className="text-sm text-muted-foreground">Grilled chicken, brown rice, and vegetables</p>
                     {userPlan === 'paid' && <p className="text-xs text-primary mt-1">~600 calories</p>}
                   </div>
-                  
+
                   <div className="glass-card p-4 rounded-lg">
                     <h4 className="font-medium mb-2">Meal 4: Pre-Workout (4:00 PM)</h4>
                     <p className="text-sm text-muted-foreground">Banana with peanut butter and protein shake</p>
                     {userPlan === 'paid' && <p className="text-xs text-primary mt-1">~400 calories</p>}
                   </div>
-                  
+
                   <div className="glass-card p-4 rounded-lg">
                     <h4 className="font-medium mb-2">Meal 5: Dinner (7:30 PM)</h4>
                     <p className="text-sm text-muted-foreground">Salmon, sweet potato, and green salad</p>
