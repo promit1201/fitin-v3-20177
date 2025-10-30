@@ -19,9 +19,9 @@ export default defineConfig(({ mode }) => {
       },
     },
     define: {
-      "import.meta.env.VITE_SUPABASE_URL": JSON.stringify(env.VITE_SUPABASE_URL),
-      "import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY": JSON.stringify(env.VITE_SUPABASE_PUBLISHABLE_KEY),
-      "import.meta.env.VITE_SUPABASE_PROJECT_ID": JSON.stringify(env.VITE_SUPABASE_PROJECT_ID),
+      "import.meta.env.VITE_SUPABASE_URL": JSON.stringify(env.VITE_SUPABASE_URL || "https://tlfrhwqtqunrpztcszwi.supabase.co"),
+      "import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY": JSON.stringify(env.VITE_SUPABASE_PUBLISHABLE_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRsZnJod3F0cXVucnB6dGNzendpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE0NzMxNDEsImV4cCI6MjA3NzA0OTE0MX0.JI7x_WbsXe1o18gL_3Lsiqj8GfgiDeiovv81ON0YTLM"),
+      "import.meta.env.VITE_SUPABASE_PROJECT_ID": JSON.stringify(env.VITE_SUPABASE_PROJECT_ID || "tlfrhwqtqunrpztcszwi"),
     },
   };
 });
