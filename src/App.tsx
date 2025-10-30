@@ -50,6 +50,7 @@ const App = () => (
           <Route path="/maintenance-diet-logs" element={<MaintenanceDietLogs />} />
           <Route path="/nutrition-tracker" element={<NutritionTracker />} />
           <Route path="/premium" element={<Premium />} />
+          <Route path="/premium" element={<Premium />} />
           <Route path="/skinny-to-muscular-plan" element={<SkinnyToMuscularPlan />} />
           <Route path="/fat-to-muscular-plan" element={<FatToMuscularPlan />} />
           <Route path="/home-workout-plan" element={<HomeWorkoutPlan />} />
