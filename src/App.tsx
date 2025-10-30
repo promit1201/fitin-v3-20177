@@ -11,7 +11,7 @@ import WorkoutPlanner from "./pages/WorkoutPlanner";
 import DietPlanner from "./pages/DietPlanner";
 import MaintenanceDietLogs from "./pages/MaintenanceDietLogs";
 import PersonalDetails from "./pages/PersonalDetails";
-import Payment from "./pages/Payment";
+import Premium from "./pages/Premium";
 import AboutPage from "./pages/AboutPage";
 import ProgramsPage from "./pages/ProgramsPage";
 import TrainersPage from "./pages/TrainersPage";
@@ -46,7 +46,7 @@ const App = () => (
           <Route path="/diet-planner" element={<DietPlanner />} />
           <Route path="/maintenance-diet-logs" element={<MaintenanceDietLogs />} />
           <Route path="/nutrition-tracker" element={<NutritionTracker />} />
-          <Route path="/payment" element={<Payment />} />
+          <Route path="/premium" element={<Premium />} />
           <Route path="/skinny-to-muscular-plan" element={<SkinnyToMuscularPlan />} />
           <Route path="/fat-to-muscular-plan" element={<FatToMuscularPlan />} />
           <Route path="/home-workout-plan" element={<HomeWorkoutPlan />} />
