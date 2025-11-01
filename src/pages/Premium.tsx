@@ -1,498 +1,278 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { Camera, Upload } from 'lucide-react';
-import { toast } from 'sonner';
-import gymBackground from '@/assets/fitnessplaceholder.png';
+import { Card } from '@/components/ui/card';
+import { ArrowRight, TrendingUp, Utensils, Activity } from 'lucide-react';
+import gymBackground from '@/assets/gymbackgroundprem.jpg';
 import logo from '@/assets/fitin-final-logo.jpg';
-import { NutritionInsights } from '@/components/nutrition/NutritionInsights';
-import { MealCard } from '@/components/nutrition/MealCard';
-import { Utensils, Coffee, Apple as AppleIcon, Pizza } from 'lucide-react';
+
+interface MealData {
+  name: string;
+  calories: number;
+  protein: number;
+  carbs: number;
+  fats: number;
+}
 
 const Premium = () => {
-  const [showWelcome, setShowWelcome] = useState(true);
-  const [showDetailsForm, setShowDetailsForm] = useState(false);
-  const [showDashboard, setShowDashboard] = useState(false);
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState<'welcome' | 'details' | 'dashboard'>('welcome');
+  const [height, setHeight] = useState('');
+  const [weight, setWeight] = useState('');
+  const [age, setAge] = useState('');
+  const [goal, setGoal] = useState('muscle-gain');
   const [selectedMeal, setSelectedMeal] = useState<string | null>(null);
 
-  // Form states
-  const [heightUnit, setHeightUnit] = useState<'cm' | 'ft'>('cm');
-  const [heightValue, setHeightValue] = useState('');
-  const [weightUnit, setWeightUnit] = useState<'kg' | 'lbs'>('kg');
-  const [weightValue, setWeightValue] = useState('');
-  const [age, setAge] = useState('');
-  const [activityLevel, setActivityLevel] = useState('');
-  const [dietPreference, setDietPreference] = useState<'veg' | 'non-veg' | ''>('');
-  const [photoFile, setPhotoFile] = useState<File | null>(null);
-  const [photoPreview, setPhotoPreview] = useState<string>('');
-
-  const activityLevels = [
-    { value: 'sedentary', label: 'Sedentary', desc: 'Little to no exercise' },
-    { value: 'light', label: 'Lightly Active', desc: '1-3 days/week' },
-    { value: 'moderate', label: 'Moderately Active', desc: '3-5 days/week' },
-    { value: 'very', label: 'Very Active', desc: '6-7 days/week' },
-  ];
-
-  const meals = [
-    { type: 'breakfast', label: 'Breakfast', calories: 450, icon: Coffee, color: 'text-orange-500' },
-    { type: 'lunch', label: 'Lunch', calories: 650, icon: Utensils, color: 'text-green-500' },
-    { type: 'dinner', label: 'Dinner', calories: 550, icon: Pizza, color: 'text-purple-500' },
-    { type: 'snacks', label: 'Snacks', calories: 200, icon: AppleIcon, color: 'text-yellow-500' },
+  // Sample meal data
+  const meals: MealData[] = [
+    { name: 'Breakfast', calories: 520, protein: 35, carbs: 45, fats: 18 },
+    { name: 'Lunch', calories: 680, protein: 45, carbs: 60, fats: 22 },
+    { name: 'Snack', calories: 250, protein: 15, carbs: 30, fats: 8 },
+    { name: 'Dinner', calories: 620, protein: 42, carbs: 55, fats: 20 },
   ];
 
   const totalCalories = meals.reduce((sum, meal) => sum + meal.calories, 0);
+  const totalProtein = meals.reduce((sum, meal) => sum + meal.protein, 0);
+  const totalCarbs = meals.reduce((sum, meal) => sum + meal.carbs, 0);
+  const totalFats = meals.reduce((sum, meal) => sum + meal.fats, 0);
 
-  const handleEnterDetails = () => {
-    setShowWelcome(false);
-    setTimeout(() => setShowDetailsForm(true), 300);
-  };
-
-  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setPhotoFile(file);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPhotoPreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleCameraCapture = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-      toast.success('Camera permission granted!');
-      stream.getTracks().forEach(track => track.stop());
-    } catch (error) {
-      toast.error('Camera access denied. Please upload a photo instead.');
-    }
-  };
-
-  const completeForm = () => {
-    toast.success('Profile completed successfully!');
-    setShowDetailsForm(false);
-    setTimeout(() => setShowDashboard(true), 300);
-  };
-
-  const renderStep = () => {
-    switch (step) {
-      case 1:
-        return (
-          <div className="space-y-4">
-            <h3 className="text-xl font-bold text-white">What's your height?</h3>
-            <p className="text-muted-foreground">This helps us personalize your fitness plan</p>
-            
-            <div className="flex gap-2">
-              <Button
-                variant={heightUnit === 'cm' ? 'default' : 'outline'}
-                onClick={() => setHeightUnit('cm')}
-                className="flex-1"
-              >
-                cm
-              </Button>
-              <Button
-                variant={heightUnit === 'ft' ? 'default' : 'outline'}
-                onClick={() => setHeightUnit('ft')}
-                className="flex-1"
-              >
-                ft
-              </Button>
-            </div>
-            
-            <input
-              type="number"
-              placeholder={heightUnit === 'cm' ? 'e.g., 175' : 'e.g., 5.9'}
-              value={heightValue}
-              onChange={(e) => setHeightValue(e.target.value)}
-              className="w-full bg-background/50 border border-border/50 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none"
-            />
-            
-            <Button 
-              onClick={() => setStep(2)}
-              disabled={!heightValue}
-              className="w-full"
-            >
-              Next
-            </Button>
-          </div>
-        );
-
-      case 2:
-        return (
-          <div className="space-y-4">
-            <h3 className="text-xl font-bold text-white">What's your weight?</h3>
-            <p className="text-muted-foreground">We'll use this to track your progress</p>
-            
-            <div className="flex gap-2">
-              <Button
-                variant={weightUnit === 'kg' ? 'default' : 'outline'}
-                onClick={() => setWeightUnit('kg')}
-                className="flex-1"
-              >
-                kg
-              </Button>
-              <Button
-                variant={weightUnit === 'lbs' ? 'default' : 'outline'}
-                onClick={() => setWeightUnit('lbs')}
-                className="flex-1"
-              >
-                lbs
-              </Button>
-            </div>
-            
-            <input
-              type="number"
-              placeholder={weightUnit === 'kg' ? 'e.g., 70' : 'e.g., 154'}
-              value={weightValue}
-              onChange={(e) => setWeightValue(e.target.value)}
-              className="w-full bg-background/50 border border-border/50 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none"
-            />
-            
-            <Button 
-              onClick={() => setStep(3)}
-              disabled={!weightValue}
-              className="w-full"
-            >
-              Next
-            </Button>
-          </div>
-        );
-
-      case 3:
-        return (
-          <div className="space-y-4">
-            <h3 className="text-xl font-bold text-white">How old are you?</h3>
-            <p className="text-muted-foreground">Age helps us customize your fitness recommendations</p>
-            
-            <input
-              type="number"
-              placeholder="e.g., 25"
-              value={age}
-              onChange={(e) => setAge(e.target.value)}
-              className="w-full bg-background/50 border border-border/50 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none"
-            />
-            
-            <Button 
-              onClick={() => setStep(4)}
-              disabled={!age}
-              className="w-full"
-            >
-              Next
-            </Button>
-          </div>
-        );
-
-      case 4:
-        return (
-          <div className="space-y-4">
-            <h3 className="text-xl font-bold text-white">Activity Level</h3>
-            <p className="text-muted-foreground">How active are you typically?</p>
-            
-            <div className="space-y-2">
-              {activityLevels.map((level) => (
-                <button
-                  key={level.value}
-                  onClick={() => setActivityLevel(level.value)}
-                  className={`w-full text-left p-4 rounded-lg border transition-all ${
-                    activityLevel === level.value
-                      ? 'bg-primary/20 border-primary'
-                      : 'bg-background/50 border-border/50 hover:border-primary/50'
-                  }`}
-                >
-                  <div className="font-semibold text-white">{level.label}</div>
-                  <div className="text-sm text-muted-foreground">{level.desc}</div>
-                </button>
-              ))}
-            </div>
-            
-            <Button 
-              onClick={() => setStep(5)}
-              disabled={!activityLevel}
-              className="w-full"
-            >
-              Next
-            </Button>
-          </div>
-        );
-
-      case 5:
-        return (
-          <div className="space-y-4">
-            <h3 className="text-xl font-bold text-white">Diet Preference</h3>
-            <p className="text-muted-foreground">What's your dietary preference?</p>
-            
-            <div className="space-y-2">
-              <button
-                onClick={() => setDietPreference('veg')}
-                className={`w-full text-left p-4 rounded-lg border transition-all ${
-                  dietPreference === 'veg'
-                    ? 'bg-primary/20 border-primary'
-                    : 'bg-background/50 border-border/50 hover:border-primary/50'
-                }`}
-              >
-                <div className="font-semibold text-white">Vegetarian</div>
-                <div className="text-sm text-muted-foreground">Plant-based diet</div>
-              </button>
-              
-              <button
-                onClick={() => setDietPreference('non-veg')}
-                className={`w-full text-left p-4 rounded-lg border transition-all ${
-                  dietPreference === 'non-veg'
-                    ? 'bg-primary/20 border-primary'
-                    : 'bg-background/50 border-border/50 hover:border-primary/50'
-                }`}
-              >
-                <div className="font-semibold text-white">Non-Vegetarian</div>
-                <div className="text-sm text-muted-foreground">Includes all food types</div>
-              </button>
-            </div>
-            
-            <Button 
-              onClick={() => setStep(6)}
-              disabled={!dietPreference}
-              className="w-full"
-            >
-              Next
-            </Button>
-          </div>
-        );
-
-      case 6:
-        return (
-          <div className="space-y-4">
-            <h3 className="text-xl font-bold text-white">Add a Profile Photo</h3>
-            <p className="text-muted-foreground">Optional - helps personalize your experience</p>
-            
-            {photoPreview && (
-              <div className="flex justify-center">
-                <img 
-                  src={photoPreview} 
-                  alt="Preview" 
-                  className="w-32 h-32 rounded-full object-cover border-2 border-primary"
-                />
-              </div>
-            )}
-            
-            <div className="grid grid-cols-2 gap-3">
-              <Button
-                onClick={handleCameraCapture}
-                variant="outline"
-                className="flex items-center gap-2"
-              >
-                <Camera className="w-4 h-4" />
-                Use Camera
-              </Button>
-              
-              <label className="cursor-pointer">
-                <Button
-                  variant="outline"
-                  className="w-full flex items-center gap-2"
-                  asChild
-                >
-                  <span>
-                    <Upload className="w-4 h-4" />
-                    Upload Photo
-                  </span>
-                </Button>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handlePhotoUpload}
-                  className="hidden"
-                />
-              </label>
-            </div>
-            
-            <Button 
-              onClick={completeForm}
-              className="w-full"
-            >
-              Complete Profile
-            </Button>
-            
-            <button
-              onClick={completeForm}
-              className="text-sm text-muted-foreground hover:text-primary w-full text-center"
-            >
-              Skip for now
-            </button>
-          </div>
-        );
-
-      default:
-        return null;
+  const handleDetailsSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (height && weight && age) {
+      setStep('dashboard');
     }
   };
 
   return (
     <div className="min-h-screen relative overflow-hidden">
       <AnimatePresence mode="wait">
-        {/* Welcome Screen */}
-        {showWelcome && (
+        {step === 'welcome' && (
           <motion.div
             key="welcome"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.8 }}
-            className="absolute inset-0 flex items-center justify-center"
-            style={{
-              backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${gymBackground})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-            }}
+            exit={{ opacity: 0 }}
+            className="min-h-screen relative flex items-center justify-center"
           >
-            <motion.div
-              initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 0.3, duration: 0.6, type: 'spring' }}
-              className="text-center px-4"
+            <div 
+              className="absolute inset-0 bg-cover bg-center"
+              style={{ backgroundImage: `url(${gymBackground})` }}
             >
-              <motion.div
-                initial={{ y: -50, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.6, duration: 0.5 }}
-                className="mb-8"
+              <div className="absolute inset-0 bg-black/70" />
+            </div>
+            
+            <motion.div
+              initial={{ y: 50, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.3 }}
+              className="relative z-10 text-center px-4"
+            >
+              <img src={logo} alt="FitIn Premium" className="h-20 w-auto mx-auto mb-8" />
+              <h1 className="text-5xl md:text-7xl font-bold mb-6 text-white">
+                Welcome to <span className="text-gradient">Premium</span>
+              </h1>
+              <p className="text-xl md:text-2xl text-white/90 mb-12 max-w-2xl mx-auto">
+                Your personalized fitness journey starts here. Track nutrition, monitor progress, and achieve your goals.
+              </p>
+              <Button
+                size="lg"
+                onClick={() => setStep('details')}
+                className="text-lg px-8 py-6 bg-primary hover:shadow-lavender-glow"
               >
-                <img src={logo} alt="FitIn Premium" className="h-20 w-auto mx-auto mb-6" />
-                <h1 className="text-5xl md:text-6xl font-bold text-white mb-4">
-                  Welcome to <span className="text-gradient">Premium</span>
-                </h1>
-                <p className="text-xl text-gray-300 mb-8">
-                  Your personalized fitness journey starts here
-                </p>
-              </motion.div>
-
-              <motion.div
-                initial={{ y: 50, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.9, duration: 0.5 }}
-              >
-                <Button
-                  onClick={handleEnterDetails}
-                  size="lg"
-                  className="px-12 py-6 text-lg"
-                >
-                  Get Started
-                </Button>
-              </motion.div>
+                Get Started <ArrowRight className="ml-2" />
+              </Button>
             </motion.div>
           </motion.div>
         )}
 
-        {/* Personal Details Form */}
-        {showDetailsForm && (
+        {step === 'details' && (
           <motion.div
             key="details"
             initial={{ opacity: 0, x: 100 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -100 }}
-            transition={{ duration: 0.5 }}
-            className="min-h-screen flex items-center justify-center px-4 py-12 relative"
+            className="min-h-screen bg-gradient-dark flex items-center justify-center px-4 py-12"
           >
-            <div className="absolute inset-0 bg-gradient-dark-radial" />
-            
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="glass-card p-8 rounded-2xl w-full max-w-md relative z-10"
-            >
-              <div className="mb-6">
-                <div className="flex justify-between items-center mb-2">
-                  <h2 className="text-2xl font-bold text-white">Personal Details</h2>
-                  <span className="text-sm text-muted-foreground">Step {step} of 6</span>
-                </div>
-                <div className="h-2 bg-background/50 rounded-full overflow-hidden">
-                  <motion.div 
-                    className="h-full bg-primary"
-                    initial={{ width: 0 }}
-                    animate={{ width: `${(step / 6) * 100}%` }}
-                    transition={{ duration: 0.3 }}
+            <Card className="glass-card p-8 rounded-2xl w-full max-w-md">
+              <img src={logo} alt="FitIn" className="h-12 w-auto mx-auto mb-6" />
+              <h2 className="text-3xl font-bold mb-2 text-center">Personal Details</h2>
+              <p className="text-muted-foreground text-center mb-8">
+                Help us personalize your experience
+              </p>
+
+              <form onSubmit={handleDetailsSubmit} className="space-y-6">
+                <div>
+                  <label className="block text-sm font-medium mb-2">Height (cm)</label>
+                  <input
+                    type="number"
+                    value={height}
+                    onChange={(e) => setHeight(e.target.value)}
+                    className="w-full bg-background/50 border border-border/50 rounded-lg px-4 py-3 text-foreground focus:border-primary focus:outline-none"
+                    placeholder="175"
+                    required
                   />
                 </div>
-              </div>
 
-              {renderStep()}
-            </motion.div>
+                <div>
+                  <label className="block text-sm font-medium mb-2">Weight (kg)</label>
+                  <input
+                    type="number"
+                    value={weight}
+                    onChange={(e) => setWeight(e.target.value)}
+                    className="w-full bg-background/50 border border-border/50 rounded-lg px-4 py-3 text-foreground focus:border-primary focus:outline-none"
+                    placeholder="70"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-2">Age</label>
+                  <input
+                    type="number"
+                    value={age}
+                    onChange={(e) => setAge(e.target.value)}
+                    className="w-full bg-background/50 border border-border/50 rounded-lg px-4 py-3 text-foreground focus:border-primary focus:outline-none"
+                    placeholder="25"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-2">Fitness Goal</label>
+                  <select
+                    value={goal}
+                    onChange={(e) => setGoal(e.target.value)}
+                    className="w-full bg-background/50 border border-border/50 rounded-lg px-4 py-3 text-foreground focus:border-primary focus:outline-none"
+                  >
+                    <option value="muscle-gain">Muscle Gain</option>
+                    <option value="fat-loss">Fat Loss</option>
+                    <option value="maintenance">Maintenance</option>
+                  </select>
+                </div>
+
+                <Button type="submit" className="w-full">
+                  Continue to Dashboard <ArrowRight className="ml-2" />
+                </Button>
+              </form>
+            </Card>
           </motion.div>
         )}
 
-        {/* Dashboard with Nutrition Tracker */}
-        {showDashboard && (
+        {step === 'dashboard' && (
           <motion.div
             key="dashboard"
-            initial={{ opacity: 0, y: 100 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -100 }}
-            transition={{ duration: 0.6 }}
+            initial={{ opacity: 0, x: 100 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -100 }}
             className="min-h-screen bg-gradient-dark"
           >
             {/* Header */}
-            <div className="border-b border-border/50 bg-background/50 backdrop-blur-md sticky top-0 z-50">
+            <div className="border-b border-border/50 bg-background/50 backdrop-blur-md">
               <div className="container mx-auto px-4 py-4">
-                <img src={logo} alt="FitIn Premium" className="h-12 w-auto" />
+                <img src={logo} alt="FitIn" className="h-12 w-auto" />
               </div>
             </div>
 
-            {/* Main Content */}
+            {/* Dashboard Content */}
             <div className="container mx-auto px-4 py-12">
               <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
+                initial={{ y: 30, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.2 }}
               >
-                <div className="mb-12">
-                  <h1 className="text-4xl font-bold mb-2">
-                    Your <span className="text-gradient">Premium Dashboard</span>
-                  </h1>
-                  <p className="text-muted-foreground">
-                    Track your nutrition and progress
-                  </p>
+                <h1 className="text-4xl font-bold mb-2">
+                  Your <span className="text-gradient">Progress Report</span>
+                </h1>
+                <p className="text-muted-foreground mb-8">Track your daily nutrition and reach your goals</p>
+
+                {/* Stats Overview */}
+                <div className="grid md:grid-cols-4 gap-4 mb-8">
+                  <Card className="glass-card p-6 rounded-xl">
+                    <div className="flex items-center gap-3 mb-2">
+                      <Utensils className="w-5 h-5 text-primary" />
+                      <span className="text-sm text-muted-foreground">Total Calories</span>
+                    </div>
+                    <p className="text-3xl font-bold text-gradient">{totalCalories}</p>
+                    <p className="text-xs text-muted-foreground mt-1">kcal/day</p>
+                  </Card>
+
+                  <Card className="glass-card p-6 rounded-xl">
+                    <div className="flex items-center gap-3 mb-2">
+                      <TrendingUp className="w-5 h-5 text-green-500" />
+                      <span className="text-sm text-muted-foreground">Protein</span>
+                    </div>
+                    <p className="text-3xl font-bold">{totalProtein}g</p>
+                    <p className="text-xs text-muted-foreground mt-1">per day</p>
+                  </Card>
+
+                  <Card className="glass-card p-6 rounded-xl">
+                    <div className="flex items-center gap-3 mb-2">
+                      <Activity className="w-5 h-5 text-blue-500" />
+                      <span className="text-sm text-muted-foreground">Carbs</span>
+                    </div>
+                    <p className="text-3xl font-bold">{totalCarbs}g</p>
+                    <p className="text-xs text-muted-foreground mt-1">per day</p>
+                  </Card>
+
+                  <Card className="glass-card p-6 rounded-xl">
+                    <div className="flex items-center gap-3 mb-2">
+                      <Activity className="w-5 h-5 text-yellow-500" />
+                      <span className="text-sm text-muted-foreground">Fats</span>
+                    </div>
+                    <p className="text-3xl font-bold">{totalFats}g</p>
+                    <p className="text-xs text-muted-foreground mt-1">per day</p>
+                  </Card>
                 </div>
 
-                {/* Nutrition Tracker Section */}
-                <div className="space-y-8">
-                  {/* Total Calories Card */}
-                  <div className="glass-card p-6 rounded-2xl">
-                    <h2 className="text-2xl font-bold mb-4">Daily Nutrition Overview</h2>
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-muted-foreground mb-2">Total Calories Today</p>
-                        <p className="text-5xl font-bold text-gradient">{totalCalories}</p>
-                        <p className="text-sm text-muted-foreground mt-1">kcal</p>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-muted-foreground mb-2">Goal</p>
-                        <p className="text-3xl font-bold">2000</p>
-                        <p className="text-sm text-muted-foreground mt-1">kcal</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Meals Grid */}
-                  <div className="grid md:grid-cols-2 gap-6">
-                    {meals.map((meal, index) => (
+                {/* Meals Section */}
+                <Card className="glass-card p-8 rounded-2xl">
+                  <h2 className="text-2xl font-bold mb-6">Daily Nutrition Tracker</h2>
+                  
+                  <div className="grid md:grid-cols-2 gap-4 mb-6">
+                    {meals.map((meal) => (
                       <motion.div
-                        key={meal.type}
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: index * 0.1 }}
+                        key={meal.name}
+                        whileHover={{ scale: 1.02 }}
+                        onClick={() => setSelectedMeal(selectedMeal === meal.name ? null : meal.name)}
+                        className="bg-background/50 border border-border/50 rounded-xl p-6 cursor-pointer hover:border-primary/50 transition-all"
                       >
-                        <MealCard
-                          {...meal}
-                          onClick={() => setSelectedMeal(meal.type)}
-                          isSelected={selectedMeal === meal.type}
-                        />
+                        <div className="flex items-center justify-between mb-4">
+                          <h3 className="text-xl font-semibold">{meal.name}</h3>
+                          <span className="text-2xl font-bold text-primary">{meal.calories}</span>
+                        </div>
+                        <p className="text-sm text-muted-foreground mb-4">kcal</p>
+
+                        <AnimatePresence>
+                          {selectedMeal === meal.name && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: 'auto', opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              className="border-t border-border/30 pt-4 space-y-2"
+                            >
+                              <div className="flex justify-between text-sm">
+                                <span className="text-muted-foreground">Protein</span>
+                                <span className="font-semibold">{meal.protein}g</span>
+                              </div>
+                              <div className="flex justify-between text-sm">
+                                <span className="text-muted-foreground">Carbs</span>
+                                <span className="font-semibold">{meal.carbs}g</span>
+                              </div>
+                              <div className="flex justify-between text-sm">
+                                <span className="text-muted-foreground">Fats</span>
+                                <span className="font-semibold">{meal.fats}g</span>
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
                       </motion.div>
                     ))}
                   </div>
 
-                  {/* Progress and Insights */}
-                  <NutritionInsights isPaidPlan={true} />
-                </div>
+                  <div className="bg-primary/10 border border-primary/30 rounded-xl p-6">
+                    <p className="text-sm text-muted-foreground mb-2">Daily Total</p>
+                    <p className="text-4xl font-bold text-gradient">{totalCalories} kcal</p>
+                  </div>
+                </Card>
               </motion.div>
             </div>
           </motion.div>
