@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Activity, TrendingUp, Calendar, Award, Dumbbell, Apple, Clock } from 'lucide-react';
 import logo from '@/assets/fitin-final-logo.jpg';
 import { useState, useEffect } from 'react';
+import { supabase } from '@/integrations/supabase/client';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -49,7 +50,10 @@ const Dashboard = () => {
             <img src={logo} alt="FitIn" className="h-12 w-auto" />
             <Button
               variant="ghost"
-              onClick={() => navigate('/')}
+              onClick={async () => {
+                await supabase.auth.signOut();
+                navigate('/home');
+              }}
               className="text-muted-foreground hover:text-primary"
             >
               Logout
