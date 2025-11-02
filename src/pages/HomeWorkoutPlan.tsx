@@ -36,7 +36,7 @@ const HomeWorkoutPlan = () => {
             </p>
           </div>
 
-          <NutritionInsights isPaidPlan={true} />
+          <NutritionInsights />
 
           <MealPlanCard isPaidPlan={true} />
 

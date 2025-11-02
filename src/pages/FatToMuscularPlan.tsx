@@ -35,7 +35,7 @@ const FatToMuscularPlan = () => {
           </div>
 
           {/* Progress Tracking Section */}
-          <NutritionInsights isPaidPlan={true} />
+          <NutritionInsights />
 
           {/* Meal Plan Section */}
           <MealPlanCard isPaidPlan={true} />
