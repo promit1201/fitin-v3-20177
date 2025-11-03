@@ -16,7 +16,7 @@ export const SocialMediaGate = ({ onComplete }: SocialMediaGateProps) => {
     youtube: false,
   });
 
-  const allJoined = Object.values(joined).every(Boolean);
+  const anyJoined = Object.values(joined).some(Boolean);
 
   const socialLinks = [
     {
@@ -54,7 +54,7 @@ export const SocialMediaGate = ({ onComplete }: SocialMediaGateProps) => {
       <div className="text-center mb-6">
         <h2 className="text-3xl font-bold mb-3">Connect with Our Community</h2>
         <p className="text-muted-foreground">
-          Join our social media channels to get trainer access and 24×7 support
+          Join at least one of our communities to get trainer access and 24×7 support
         </p>
       </div>
 
@@ -92,16 +92,16 @@ export const SocialMediaGate = ({ onComplete }: SocialMediaGateProps) => {
 
       <Button
         onClick={onComplete}
-        disabled={!allJoined}
+        disabled={!anyJoined}
         className="w-full"
         size="lg"
       >
-        {allJoined ? 'Continue to Nutrition Tracker' : 'Join All Communities to Continue'}
+        {anyJoined ? 'Continue to Nutrition Tracker' : 'Join Any Community to Continue'}
       </Button>
 
-      {!allJoined && (
+      {!anyJoined && (
         <p className="text-sm text-center text-muted-foreground mt-4">
-          Please join all communities and check the boxes to proceed
+          Please join at least one community and check the box to proceed
         </p>
       )}
     </Card>
