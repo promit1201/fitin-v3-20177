@@ -3,21 +3,29 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Coffee, Sun, Moon, Apple as AppleIcon, Download, Target, Calendar, BarChart } from 'lucide-react';
-import logo from '@/assets/fitin-final-logo.jpg';
+import { Coffee, Sun, Moon, Apple as AppleIcon, LogOut, ArrowLeft, Calendar, BarChart } from 'lucide-react';
 import { MealCard } from '@/components/nutrition/MealCard';
 import { DailyCalories } from '@/components/nutrition/DailyCalories';
 import { Macronutrients } from '@/components/nutrition/Macronutrients';
-import { QuickActions } from '@/components/nutrition/QuickActions';
 import { NutritionInsights } from '@/components/nutrition/NutritionInsights';
 import { MealPlanner } from '@/components/nutrition/MealPlanner';
+import { CalorieCalculator } from '@/components/nutrition/CalorieCalculator';
+import { SocialMediaGate } from '@/components/nutrition/SocialMediaGate';
+import { WaterIntake } from '@/components/nutrition/WaterIntake';
+import { BarcodeScanner } from '@/components/nutrition/BarcodeScanner';
+import { TrainerSupport } from '@/components/nutrition/TrainerSupport';
 import { supabase } from '@/integrations/supabase/client';
 import { useQuery } from '@tanstack/react-query';
+import { useToast } from '@/hooks/use-toast';
 
 const PremiumNutritionTracker = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [activeTab, setActiveTab] = useState('today');
   const [selectedMeal, setSelectedMeal] = useState<string | null>(null);
+  const [step, setStep] = useState<'calculator' | 'social' | 'tracker'>('calculator');
+  const [maintenanceCalories, setMaintenanceCalories] = useState(2000);
+  const [goal, setGoal] = useState<'maintain' | 'cut' | 'bulk'>('maintain');
 
   // Fetch user plan
   const { data: userPlan } = useQuery({
@@ -52,8 +60,54 @@ const PremiumNutritionTracker = () => {
     { type: 'snacks', label: 'Snacks', calories: 174, icon: AppleIcon, color: 'bg-green-500' },
   ];
 
+  const handleCaloriesCalculated = (calories: number, selectedGoal: 'maintain' | 'cut' | 'bulk') => {
+    let targetCalories = calories;
+    
+    if (selectedGoal === 'cut') {
+      targetCalories = Math.round(calories * 0.8); // 20% deficit
+    } else if (selectedGoal === 'bulk') {
+      targetCalories = Math.round(calories * 1.15); // 15% surplus
+    }
+    
+    setMaintenanceCalories(targetCalories);
+    setGoal(selectedGoal);
+    setStep('social');
+  };
+
+  const handleSocialComplete = () => {
+    setStep('tracker');
+  };
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    navigate('/');
+  };
+
   const totalCalories = meals.reduce((sum, meal) => sum + meal.calories, 0);
 
+  // Show calculator step
+  if (step === 'calculator') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5 py-12">
+        <div className="container mx-auto px-4">
+          <CalorieCalculator onCalculated={handleCaloriesCalculated} />
+        </div>
+      </div>
+    );
+  }
+
+  // Show social media gate
+  if (step === 'social') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5 py-12">
+        <div className="container mx-auto px-4">
+          <SocialMediaGate onComplete={handleSocialComplete} />
+        </div>
+      </div>
+    );
+  }
+
+  // Show main tracker
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
       <div className="container mx-auto px-4 py-6 max-w-7xl">
@@ -61,20 +115,20 @@ const PremiumNutritionTracker = () => {
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8 gap-4">
           <div>
             <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
-              Nutrition Tracker
+              Premium Nutrition Tracker
             </h1>
             <p className="text-muted-foreground">
-              Track your meals, monitor your nutrition, and achieve your health goals
+              Your goal: <span className="font-semibold text-primary capitalize">{goal}</span> • Target: {maintenanceCalories} kcal/day
             </p>
           </div>
           <div className="flex gap-3">
-            <Button variant="outline" className="gap-2">
-              <Download className="w-4 h-4" />
-              <span className="hidden sm:inline">Export Data</span>
+            <Button variant="outline" className="gap-2" onClick={() => navigate('/dashboard')}>
+              <ArrowLeft className="w-4 h-4" />
+              <span className="hidden sm:inline">Back</span>
             </Button>
-            <Button className="gap-2">
-              <Target className="w-4 h-4" />
-              <span className="hidden sm:inline">Set Goals</span>
+            <Button variant="outline" className="gap-2" onClick={handleLogout}>
+              <LogOut className="w-4 h-4" />
+              <span className="hidden sm:inline">Logout</span>
             </Button>
           </div>
         </div>
@@ -163,13 +217,17 @@ const PremiumNutritionTracker = () => {
               </AnimatePresence>
 
               {/* Stats Grid */}
-              <div className="grid md:grid-cols-2 gap-6">
-                <DailyCalories consumed={totalCalories} target={2000} />
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <DailyCalories consumed={totalCalories} target={maintenanceCalories} />
                 <Macronutrients selectedMeal={selectedMeal} />
+                <WaterIntake />
               </div>
 
-              {/* Quick Actions */}
-              <QuickActions />
+              {/* Barcode Scanner & Trainer Support */}
+              <div className="grid md:grid-cols-2 gap-6">
+                <BarcodeScanner />
+                <TrainerSupport />
+              </div>
 
               {/* Recent Foods & Tips */}
               <NutritionInsights />
@@ -185,16 +243,6 @@ const PremiumNutritionTracker = () => {
           </TabsContent>
         </Tabs>
 
-        {/* Back Button for Mobile */}
-        <div className="mt-8 flex justify-center md:hidden">
-          <Button
-            variant="outline"
-            onClick={() => navigate('/dashboard')}
-            className="w-full"
-          >
-            Back to Dashboard
-          </Button>
-        </div>
       </div>
     </div>
   );
