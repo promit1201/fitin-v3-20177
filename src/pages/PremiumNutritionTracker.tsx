@@ -15,6 +15,7 @@ import { SocialMediaGate } from '@/components/nutrition/SocialMediaGate';
 import { WaterIntake } from '@/components/nutrition/WaterIntake';
 import { BarcodeScanner } from '@/components/nutrition/BarcodeScanner';
 import { TrainerSupport } from '@/components/nutrition/TrainerSupport';
+import { StrengthProgressionChart } from '@/components/nutrition/StrengthProgressionChart';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { useQuery } from '@tanstack/react-query';
@@ -202,6 +203,9 @@ const PremiumNutritionTracker = () => {
 
                   {/* Quick Actions */}
                   <QuickActions />
+
+                  {/* Strength Progression Chart */}
+                  <StrengthProgressionChart />
                 </div>
 
                 {/* Right Column - Stats */}
