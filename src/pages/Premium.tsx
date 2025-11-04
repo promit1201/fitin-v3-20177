@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { ArrowRight, TrendingUp, Utensils, Activity } from 'lucide-react';
@@ -15,12 +16,18 @@ interface MealData {
 }
 
 const Premium = () => {
+  const navigate = useNavigate();
   const [step, setStep] = useState<'welcome' | 'details' | 'dashboard'>('welcome');
   const [height, setHeight] = useState('');
   const [weight, setWeight] = useState('');
   const [age, setAge] = useState('');
   const [goal, setGoal] = useState('muscle-gain');
   const [selectedMeal, setSelectedMeal] = useState<string | null>(null);
+
+  // Redirect to the correct premium tracker
+  useEffect(() => {
+    navigate('/premium-nutrition-tracker', { replace: true });
+  }, [navigate]);
 
   // Sample meal data
   const meals: MealData[] = [

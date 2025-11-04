@@ -1,10 +1,9 @@
-import { QrCode, Camera, Droplets, Calendar } from 'lucide-react';
+import { QrCode, Droplets, Calendar } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 
 export const QuickActions = () => {
   const actions = [
     { icon: QrCode, label: 'Scan Barcode', description: 'Quick food entry', color: 'bg-blue-500' },
-    { icon: Camera, label: 'Photo Recognition', description: 'Identify food by photo', color: 'bg-green-500' },
     { icon: Droplets, label: 'Log Water', description: 'Add glass of water', color: 'bg-cyan-500' },
     { icon: Calendar, label: 'Meal Planner', description: 'Plan upcoming meals', color: 'bg-purple-500' },
   ];

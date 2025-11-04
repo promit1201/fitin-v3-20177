@@ -94,7 +94,7 @@ const NutritionTracker = () => {
                 Get maintenance calorie calculator, personalized goals, barcode scanning, trainer-managed meal plans, and 24×7 trainer support
               </p>
             </div>
-            <Button onClick={() => navigate('/premium')} className="whitespace-nowrap">
+            <Button onClick={() => navigate('/premium-nutrition-tracker')} className="whitespace-nowrap">
               Upgrade Now
             </Button>
           </div>
