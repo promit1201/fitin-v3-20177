@@ -24,6 +24,9 @@ import NotFound from "./pages/NotFound";
 import SkinnyToMuscularPlan from "./pages/SkinnyToMuscularPlan";
 import FatToMuscularPlan from "./pages/FatToMuscularPlan";
 import HomeWorkoutPlan from "./pages/HomeWorkoutPlan";
+import PremiumDashboard from "./pages/PremiumDashboard";
+import ProgressGallery from "./pages/ProgressGallery";
+import MealPlanner from "./pages/MealPlanner";
 
 const queryClient = new QueryClient();
 
@@ -55,6 +58,9 @@ const App = () => (
           <Route path="/skinny-to-muscular-plan" element={<SkinnyToMuscularPlan />} />
           <Route path="/fat-to-muscular-plan" element={<FatToMuscularPlan />} />
           <Route path="/home-workout-plan" element={<HomeWorkoutPlan />} />
+          <Route path="/premium-dashboard" element={<PremiumDashboard />} />
+          <Route path="/progress-gallery" element={<ProgressGallery />} />
+          <Route path="/meal-planner" element={<MealPlanner />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
