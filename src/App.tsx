@@ -1,6 +1,5 @@
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
@@ -32,40 +31,38 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/auth" element={<Auth />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/programs" element={<ProgramsPage />} />
-          <Route path="/trainers" element={<TrainersPage />} />
-          <Route path="/testimonials" element={<TestimonialsPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="/login" element={<Auth />} />
-          <Route path="/signup" element={<Auth />} />
-          <Route path="/personal-details" element={<PersonalDetails />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/workout-planner" element={<WorkoutPlanner />} />
-          <Route path="/diet-planner" element={<DietPlanner />} />
-          <Route path="/maintenance-diet-logs" element={<MaintenanceDietLogs />} />
-          <Route path="/nutrition-tracker" element={<NutritionTracker />} />
-          <Route path="/premium-nutrition-tracker" element={<PremiumNutritionTracker />} />
-          <Route path="/premium" element={<Premium />} />
-          <Route path="/skinny-to-muscular-plan" element={<SkinnyToMuscularPlan />} />
-          <Route path="/fat-to-muscular-plan" element={<FatToMuscularPlan />} />
-          <Route path="/home-workout-plan" element={<HomeWorkoutPlan />} />
-          <Route path="/premium-dashboard" element={<PremiumDashboard />} />
-          <Route path="/progress-gallery" element={<ProgressGallery />} />
-          <Route path="/meal-planner" element={<MealPlanner />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
+    <Toaster />
+    <Sonner />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Index />} />
+        <Route path="/auth" element={<Auth />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/programs" element={<ProgramsPage />} />
+        <Route path="/trainers" element={<TrainersPage />} />
+        <Route path="/testimonials" element={<TestimonialsPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/login" element={<Auth />} />
+        <Route path="/signup" element={<Auth />} />
+        <Route path="/personal-details" element={<PersonalDetails />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/workout-planner" element={<WorkoutPlanner />} />
+        <Route path="/diet-planner" element={<DietPlanner />} />
+        <Route path="/maintenance-diet-logs" element={<MaintenanceDietLogs />} />
+        <Route path="/nutrition-tracker" element={<NutritionTracker />} />
+        <Route path="/premium-nutrition-tracker" element={<PremiumNutritionTracker />} />
+        <Route path="/premium" element={<Premium />} />
+        <Route path="/skinny-to-muscular-plan" element={<SkinnyToMuscularPlan />} />
+        <Route path="/fat-to-muscular-plan" element={<FatToMuscularPlan />} />
+        <Route path="/home-workout-plan" element={<HomeWorkoutPlan />} />
+        <Route path="/premium-dashboard" element={<PremiumDashboard />} />
+        <Route path="/progress-gallery" element={<ProgressGallery />} />
+        <Route path="/meal-planner" element={<MealPlanner />} />
+        {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </BrowserRouter>
   </QueryClientProvider>
 );
 
