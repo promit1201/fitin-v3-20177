@@ -30,6 +30,8 @@ const WorkoutPlanner = () => {
   const [showCalorieCalculator, setShowCalorieCalculator] = useState(false);
   const [showWorkoutLogger, setShowWorkoutLogger] = useState(false);
   const [userPlan, setUserPlan] = useState<'free' | 'paid'>('free');
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+  const [showPremiumModal, setShowPremiumModal] = useState(false);
   const [workoutLogs, setWorkoutLogs] = useState<WorkoutLog[]>([]);
   const [userProfile, setUserProfile] = useState<any>(null);
   const [showPersonalizedModal, setShowPersonalizedModal] = useState(false);
@@ -48,7 +50,6 @@ const WorkoutPlanner = () => {
   const [logRestTime, setLogRestTime] = useState('');
   const [logTotalTime, setLogTotalTime] = useState('');
   const [logNotes, setLogNotes] = useState('');
-  const [showPremiumModal, setShowPremiumModal] = useState(false);
 
   const premiumPlan = {
     id: 'personalized', 
@@ -121,6 +122,11 @@ const WorkoutPlanner = () => {
     } else {
       setWorkoutLogs(data || []);
     }
+  };
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    navigate('/home');
   };
 
   const calculateCalories = () => {
@@ -320,13 +326,20 @@ const WorkoutPlanner = () => {
               </Button>
               <img src={logo} alt="FitIn" className="h-10 w-auto" />
             </div>
-            <Button
-              variant="ghost"
-              onClick={() => navigate('/')}
-              className="text-muted-foreground hover:text-primary"
-            >
-              Logout
-            </Button>
+            <div className="flex gap-2">
+              <Button
+                onClick={() => setShowUpgradeModal(true)}
+                className="bg-primary text-primary-foreground hover:shadow-lavender-glow"
+              >
+                Upgrade to Premium
+              </Button>
+              <Button
+                variant="outline"
+                onClick={handleLogout}
+              >
+                Logout
+              </Button>
+            </div>
           </div>
         </div>
       </div>
