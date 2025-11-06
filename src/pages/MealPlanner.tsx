@@ -1,12 +1,39 @@
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { MealPlanner as MealPlannerComponent } from '@/components/nutrition/MealPlanner';
 import { ArrowLeft } from 'lucide-react';
 import fitinLogo from '@/assets/fitin-final-logo.jpg';
 import gymBackground from '@/assets/gymimage2.jpg';
+import { supabase } from '@/integrations/supabase/client';
+import { useQuery } from '@tanstack/react-query';
 
 export default function MealPlanner() {
   const navigate = useNavigate();
+
+  // Check if user has completed profile setup
+  const { data: profile, isLoading: profileLoading } = useQuery({
+    queryKey: ['user-profile'],
+    queryFn: async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
+      
+      const { data } = await supabase
+        .from('profiles')
+        .select('height_cm, weight_kg')
+        .eq('user_id', user.id)
+        .single();
+      
+      return data;
+    },
+  });
+
+  // Redirect to premium dashboard if profile not complete
+  useEffect(() => {
+    if (!profileLoading && (!profile || !profile.height_cm || !profile.weight_kg)) {
+      navigate('/premium-dashboard');
+    }
+  }, [profile, profileLoading, navigate]);
 
   return (
     <div
