@@ -26,6 +26,7 @@ import HomeWorkoutPlan from "./pages/HomeWorkoutPlan";
 import PremiumDashboard from "./pages/PremiumDashboard";
 import ProgressGallery from "./pages/ProgressGallery";
 import MealPlanner from "./pages/MealPlanner";
+import ProfileInput from "./pages/ProfileInput";
 
 const queryClient = new QueryClient();
 
@@ -45,6 +46,7 @@ const App = () => (
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/login" element={<Auth />} />
         <Route path="/signup" element={<Auth />} />
+        <Route path="/profile-input" element={<ProfileInput />} />
         <Route path="/personal-details" element={<PersonalDetails />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/workout-planner" element={<WorkoutPlanner />} />

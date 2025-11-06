@@ -6,16 +6,18 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Coffee, Sun, Moon, Apple as AppleIcon, Droplets, LogOut, ArrowLeft } from 'lucide-react';
 import logo from '@/assets/fitin-final-logo.jpg';
 import { MealCard } from '@/components/nutrition/MealCard';
-import { Macronutrients } from '@/components/nutrition/Macronutrients';
-import { RestDayCalendar } from '@/components/nutrition/RestDayCalendar';
-import { QuickActions } from '@/components/nutrition/QuickActions';
 import { NutritionInsights } from '@/components/nutrition/NutritionInsights';
 import { CalorieCalculator } from '@/components/nutrition/CalorieCalculator';
 import { SocialMediaGate } from '@/components/nutrition/SocialMediaGate';
 import { WaterIntake } from '@/components/nutrition/WaterIntake';
 import { BarcodeScanner } from '@/components/nutrition/BarcodeScanner';
-import { TrainerSupport } from '@/components/nutrition/TrainerSupport';
+import { QuickActions } from '@/components/nutrition/QuickActions';
 import { StrengthProgressionChart } from '@/components/nutrition/StrengthProgressionChart';
+import { Macronutrients } from '@/components/nutrition/Macronutrients';
+import { TrainerSupport } from '@/components/nutrition/TrainerSupport';
+import { RestDayCalendar } from '@/components/nutrition/RestDayCalendar';
+import { MealLogger } from '@/components/nutrition/MealLogger';
+import { WeeklyCalendar } from '@/components/nutrition/WeeklyCalendar';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { useQuery } from '@tanstack/react-query';
@@ -109,7 +111,25 @@ const PremiumNutritionTracker = () => {
     { type: 'snacks', label: 'Snacks', calories: 174, icon: AppleIcon, color: 'bg-green-500' },
   ];
 
-  const totalCalories = meals.reduce((sum, meal) => sum + meal.calories, 0);
+  const { data: todayLogs } = useQuery({
+    queryKey: ['nutrition-logs-today'],
+    queryFn: async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return [];
+
+      const today = new Date().toISOString().split('T')[0];
+      const { data, error } = await supabase
+        .from('nutrition_logs')
+        .select('*')
+        .eq('user_id', user.id)
+        .eq('meal_date', today);
+
+      if (error) throw error;
+      return data || [];
+    },
+  });
+
+  const totalCalories = todayLogs?.reduce((sum, log) => sum + (log.calories || 0), 0) || 0;
 
   // Show calculator step
   if (step === 'calculator') {
@@ -171,18 +191,25 @@ const PremiumNutritionTracker = () => {
           transition={{ duration: 0.6 }}
         >
           {/* Header Section */}
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
-            <div>
-              <h1 className="text-4xl font-bold mb-2">
-                <span className="text-gradient">Premium Nutrition Tracker</span>
-              </h1>
-              <p className="text-muted-foreground">
-                Your goal: <span className="font-semibold text-primary capitalize">{goal}</span> • Target: {maintenanceCalories} kcal/day
-              </p>
-              <p className="text-sm text-muted-foreground mt-1">
-                ✨ Meal plans and calendar managed by certified trainers
-              </p>
+          <div className="mb-6">
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h2 className="text-xl font-bold mb-1">Your Goal: {goal}</h2>
+                <p className="text-muted-foreground">Target: {maintenanceCalories} calories/day</p>
+              </div>
+              <div className="text-right">
+                <p className="text-sm text-muted-foreground">Today's Total</p>
+                <p className="text-2xl font-bold text-primary">{totalCalories} cal</p>
+                <p className="text-xs text-muted-foreground">
+                  {maintenanceCalories - totalCalories > 0 
+                    ? `${maintenanceCalories - totalCalories} cal remaining`
+                    : `${totalCalories - maintenanceCalories} cal over`
+                  }
+                </p>
+              </div>
             </div>
+            
+            <MealLogger />
           </div>
 
           {/* Tabs */}
@@ -198,6 +225,7 @@ const PremiumNutritionTracker = () => {
 
             {/* Today Tab */}
             <TabsContent value="today" className="space-y-6">
+              <WeeklyCalendar />
               <div className="grid lg:grid-cols-3 gap-6">
                 {/* Left Column - Meals */}
                 <div className="lg:col-span-2 space-y-6">
