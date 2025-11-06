@@ -39,10 +39,12 @@ const NutritionTracker = () => {
 
   const isPaidPlan = userPlan?.plan_type === 'paid';
 
-  // Redirect to diet planner instead
+  // Redirect to premium tracker if user has paid plan
   useEffect(() => {
-    navigate('/diet-planner');
-  }, [navigate]);
+    if (userPlan && isPaidPlan) {
+      navigate('/premium-nutrition-tracker');
+    }
+  }, [userPlan, isPaidPlan, navigate]);
 
   const meals = [
     { type: 'breakfast', label: 'Breakfast', calories: 350, icon: Coffee, color: 'bg-orange-500' },

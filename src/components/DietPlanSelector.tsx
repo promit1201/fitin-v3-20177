@@ -66,8 +66,8 @@ const DietPlanSelector = () => {
   };
 
   const handlePlanClick = (plan: DietPlan) => {
-    if (plan.isPaid && userPlan !== 'paid') {
-      toast.error('Unlock Cut/Bulk diets with Premium! Upgrade to access custom diet plans and progress graphs.');
+    if (plan.isPaid && userPlan === 'free') {
+      toast.error('Upgrade to premium to access this diet plan');
       return;
     }
     navigate(plan.route);

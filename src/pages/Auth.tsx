@@ -22,8 +22,7 @@ const Auth = () => {
     const checkSession = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
-        // Always redirect to profile input page on login
-        navigate('/profile-input');
+        navigate('/dashboard');
       }
     };
     checkSession();
@@ -31,8 +30,7 @@ const Auth = () => {
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (session && event === 'SIGNED_IN') {
-        // Always redirect to profile input page on login
-        navigate('/profile-input');
+        navigate('/dashboard');
       }
     });
 
@@ -79,7 +77,7 @@ const Auth = () => {
 
       if (data.user) {
         toast.success('Welcome back!');
-        navigate('/profile-input');
+        navigate('/dashboard');
       }
     } catch (error: any) {
       toast.error('An unexpected error occurred');
@@ -134,7 +132,7 @@ const Auth = () => {
       if (data.user) {
         toast.success('Account created successfully! Redirecting...');
         // Auto-login after signup
-        navigate('/profile-input');
+        navigate('/dashboard');
       }
     } catch (error: any) {
       toast.error('An unexpected error occurred');
